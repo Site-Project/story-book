@@ -8,6 +8,7 @@ class AppRouter {
   CupertinoPageRoute pageRoute(RouteSettings settings) {
     return CupertinoPageRoute(builder: (context) {
       switch (settings.name) {
+        case RouteNames.initial:
         case RouteNames.home:
           return const HomeScreen();
         default:
