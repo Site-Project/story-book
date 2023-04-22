@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatelessWidget {
+import '../services/category_service/category_service_impl.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final categoryService = CategoryServiceImpl(http.Client());
+
+  void checkData() async {
+    final x = await categoryService.getCategories();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    checkData();
+
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
