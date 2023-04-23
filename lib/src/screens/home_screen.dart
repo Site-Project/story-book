@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../widgets/retry_button.dart';
 
+import '../blocs/bloc/category_book_bloc.dart';
+import '../blocs/bloc/category_book_event.dart';
+import '../blocs/bloc/category_book_state.dart';
 import '../models/category_book.dart';
 import '../shared/constants/app_constants.dart' as constants;
+import '../shared/helpers/iterable_helper.dart';
 import '../shared/styles/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,18 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    context.read<CategoryBookBloc>().add(CategoryBookRequested());
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final categories = [
-      CategoryBook(id: 0, name: 'Truyện Full'),
-      CategoryBook(id: 1, name: 'Truyện Full chọn lọc'),
-      CategoryBook(id: 0, name: 'Truyện Full'),
-      CategoryBook(id: 0, name: 'Truyện Full'),
-      CategoryBook(id: 0, name: 'Truyện Full'),
-      CategoryBook(id: 1, name: 'Truyện Full chọn lọc'),
-      CategoryBook(id: 0, name: 'Truyện Full'),
-      CategoryBook(id: 0, name: 'Truyện Full'),
-      CategoryBook(id: 0, name: 'Truyện Full'),
-    ];
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -60,46 +62,118 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Flexible(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Column(children: [
-                ...List.generate((categories.length / 2).ceil(), (index) {
-                  int leftItem = (2 * index);
-                  int rightItem = (2 * index) + 1;
-                  return IntrinsicHeight(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          leftItem < categories.length
-                              ? CategoryItem(data: categories[leftItem])
-                              : const SizedBox.shrink(),
-                          SizedBox(
-                              width: rightItem < categories.length ? 15 : 0),
-                          rightItem < categories.length
-                              ? CategoryItem(data: categories[rightItem])
-                              : const SizedBox.shrink(),
-                        ],
+            child: RefreshIndicator(
+              onRefresh: () async {
+                context.read<CategoryBookBloc>().add(CategoryBookRequested());
+              },
+              child: BlocBuilder<CategoryBookBloc, CategoryBookState>(
+                builder: (context, state) {
+                  List<CategoryBook> categories = [];
+                  int hafdOfLength = 0;
+                  if (state is CategoryBookLoadSuccess) {
+                    categories = state.list;
+                    hafdOfLength = (categories.length / 2).ceil();
+                  }
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Column(
+                          children: List.generate(hafdOfLength, (index) {
+                            int leftItem = (2 * index);
+                            int rightItem = (2 * index) + 1;
+                            return IntrinsicHeight(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    leftItem < categories.length
+                                        ? _CategoryItem(
+                                            data: categories[leftItem])
+                                        : const SizedBox.shrink(),
+                                    SizedBox(
+                                        width: rightItem < categories.length
+                                            ? 15
+                                            : 0),
+                                    rightItem < categories.length
+                                        ? _CategoryItem(
+                                            data: categories[rightItem])
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
                       ),
-                    ),
+                      state is CategoryBookLoadFailure &&
+                              IterableHelper.isNullOrEmpty(categories)
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(30.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      constants.ErrorMessage.getListFailure,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                            color: Colors.grey,
+                                          ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    ReTryButtom(
+                                      title: constants.Global.retry,
+                                      onRetry: () {
+                                        context
+                                            .read<CategoryBookBloc>()
+                                            .add(CategoryBookRequested());
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      state is CategoryBookLoadInProgress
+                          ? Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const CircularProgressIndicator(
+                                  backgroundColor: Colors.transparent,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
                   );
-                }),
-              ]),
+                },
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-class CategoryItem extends StatelessWidget {
+class _CategoryItem extends StatelessWidget {
   final CategoryBook data;
-  const CategoryItem({
-    super.key,
+  const _CategoryItem({
+    Key? key,
     required this.data,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
