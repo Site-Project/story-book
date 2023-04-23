@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../../config/app_config.dart';
@@ -11,7 +13,7 @@ class CategoryServiceImpl implements CategoryService {
   CategoryServiceImpl(this.client);
 
   @override
-  Future<List<CategoryBook>> getCategories() async {
+  Future<List<CategoryBook>?> getCategories() async {
     try {
       final uri = Uri(
         scheme: 'https',
@@ -19,15 +21,21 @@ class CategoryServiceImpl implements CategoryService {
         path: AppConfig.instance
             .getValue(AppConfigConstants.GET_CATEGORY_LIST_PATH),
       );
-      final data = await httpClient.get(uri);
-      if (data.statusCode == 200) {
-        data;
+      final response = await httpClient.get(uri);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final List<CategoryBook> results = [];
+        for (var element in data) {
+          results.add(CategoryBook.fromJson(element));
+        }
+        return results;
+      } else {
+        throw (Exception(
+            'Has an error with static code ${response.statusCode}'));
       }
     } catch (e) {
-      throw (e);
+      throw (Exception(e.toString()));
     }
-
-    return [];
   }
 
   @override

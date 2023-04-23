@@ -10,7 +10,7 @@ class CategoryBook extends Equatable {
     _id = id;
   }
 
-  CategoryBook fromJson(Map<String, dynamic> json) {
+  factory CategoryBook.fromJson(Map<String, dynamic> json) {
     return CategoryBook(
       id: json['id'],
       name: json['name'],

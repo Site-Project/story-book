@@ -7,5 +7,5 @@ abstract class CategoryService {
 
   CategoryService({required this.httpClient});
 
-  Future<List<CategoryBook>> getCategories();
+  Future<List<CategoryBook>?> getCategories();
 }
