@@ -6,6 +6,7 @@ class Home {
 class RouteNames {
   static const String initial = '/';
   static const String home = '/home';
+  static const String storyList = '/storyList';
 }
 
 class ErrorMessage {

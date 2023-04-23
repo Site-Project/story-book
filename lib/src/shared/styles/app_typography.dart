@@ -28,7 +28,7 @@ class AppTypography {
       color: Colors.black,
     ),
     titleSmall: GoogleFonts.nunito(
-      fontSize: 14,
+      fontSize: 12,
       color: Colors.black,
     ),
     bodyMedium: GoogleFonts.lora(

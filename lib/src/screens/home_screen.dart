@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widgets/retry_button.dart';
 
 import '../blocs/bloc/category_book_bloc.dart';
 import '../blocs/bloc/category_book_event.dart';
@@ -9,6 +8,7 @@ import '../models/category_book.dart';
 import '../shared/constants/app_constants.dart' as constants;
 import '../shared/helpers/iterable_helper.dart';
 import '../shared/styles/app_colors.dart';
+import '../widgets/retry_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -180,6 +180,10 @@ class _CategoryItem extends StatelessWidget {
     final String title = data.name ?? '';
     return Flexible(
       child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, constants.RouteNames.storyList,
+              arguments: data);
+        },
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(

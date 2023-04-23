@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
+import '../models/category_book.dart';
 import '../screens/home_screen.dart';
 import '../screens/not_found_screen.dart';
 import '../screens/splash_screen.dart';
+import '../screens/story_list_screen.dart';
 import '../shared/constants/app_constants.dart';
 
 class AppRouter {
@@ -12,7 +14,10 @@ class AppRouter {
         case RouteNames.initial:
           return const SplashScreen();
         case RouteNames.home:
-          return HomeScreen();
+          return const HomeScreen();
+        case RouteNames.storyList:
+          final data = settings.arguments as CategoryBook;
+          return StoryListScreen(data: data);
         default:
           return const NotFoundScreen();
       }
