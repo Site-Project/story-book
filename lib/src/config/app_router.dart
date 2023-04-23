@@ -12,7 +12,7 @@ class AppRouter {
         case RouteNames.initial:
           return const SplashScreen();
         case RouteNames.home:
-          return const HomeScreen();
+          return HomeScreen();
         default:
           return const NotFoundScreen();
       }

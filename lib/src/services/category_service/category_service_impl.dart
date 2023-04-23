@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 
 import '../../config/app_config.dart';
 import '../../config/app_config_constants.dart';
-import '../../models/category.dart';
+import '../../models/category_book.dart';
 import 'category_service.dart';
 
 class CategoryServiceImpl implements CategoryService {
@@ -11,7 +11,7 @@ class CategoryServiceImpl implements CategoryService {
   CategoryServiceImpl(this.client);
 
   @override
-  Future<List<Category>> getCategories() async {
+  Future<List<CategoryBook>> getCategories() async {
     try {
       final uri = Uri(
         scheme: 'https',
