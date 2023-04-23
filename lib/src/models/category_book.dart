@@ -11,7 +11,7 @@ class CategoryBook extends Equatable {
   }
 
   factory CategoryBook.fromJson(Map<String, dynamic> json) {
-    assert(json['id']);
+    assert(json['id'] != null);
     return CategoryBook(
       id: json['id'],
       name: json['name'],

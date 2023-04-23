@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import '../shared/constants/app_constants.dart' as constants;
-
 class StoryBook extends Equatable {
   late final int _id;
   final String? title;
@@ -24,7 +22,7 @@ class StoryBook extends Equatable {
   }
 
   factory StoryBook.fromJson(Map<String, dynamic> json) {
-    assert(json['id']);
+    assert(json['id'] != null);
     return StoryBook(
       id: json['id'],
       title: json['title'],
