@@ -4,10 +4,10 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 import '../../config/app_config.dart';
-import '../../shared/constants/app_constants.dart' as constants;
 import '../../config/app_config_constants.dart';
 import '../../models/category_book.dart';
 import '../../models/story_book.dart';
+import '../../shared/constants/app_constants.dart' as constants;
 import 'category_service.dart';
 
 class CategoryServiceImpl implements CategoryService {
@@ -33,8 +33,8 @@ class CategoryServiceImpl implements CategoryService {
         }
         return results;
       } else {
-        String errorMgs = constants.ErrorMessage.requestError
-            .replaceAll(r'#StaticCode#', response.statusCode.toString());
+        String errorMgs = constants.ErrorMessage.requestError.replaceAll(
+            RegExp(r'#StaticCode#'), response.statusCode.toString());
         log(errorMgs);
         throw (Exception(errorMgs));
       }
@@ -55,29 +55,26 @@ class CategoryServiceImpl implements CategoryService {
     final limitItem =
         AppConfig.instance.getValue(AppConfigConstants.NUM_OF_LIMIT_ITEM);
 
-    final Map<String, dynamic> queryParams = {
-      "page": page,
-      "limit": limitItem,
-    };
+    final String query = 'page=$page&limit=${int.tryParse(limitItem)}';
 
     try {
       final uri = Uri(
         scheme: 'https',
         host: AppConfig.instance.getValue(AppConfigConstants.HOST_NAME),
         path: path,
-        queryParameters: queryParams,
+        query: query,
       );
       final response = await httpClient.get(uri);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final List<CategoryBook> results = [];
+        final List<StoryBook> results = [];
         for (var element in data) {
-          results.add(CategoryBook.fromJson(element));
+          results.add(StoryBook.fromJson(element));
         }
-        return [];
+        return results;
       } else {
-        String errorMgs = constants.ErrorMessage.requestError
-            .replaceAll(r'#StaticCode#', response.statusCode.toString());
+        String errorMgs = constants.ErrorMessage.requestError.replaceAll(
+            RegExp(r'#StaticCode#'), response.statusCode.toString());
         log(errorMgs);
         throw (Exception(errorMgs));
       }
@@ -92,7 +89,8 @@ class CategoryServiceImpl implements CategoryService {
     final String storyByCategoryPath = AppConfig.instance
         .getValue(AppConfigConstants.GET_STORY_LIST_BY_CATEGORY_PATH);
 
-    storyByCategoryPath.replaceAll(r'#ID#', id.toString());
-    return categoryPath + storyByCategoryPath;
+    String fillIdPath =
+        storyByCategoryPath.replaceAll(RegExp(r'#ID#'), id.toString());
+    return "$categoryPath/$fillIdPath";
   }
 }

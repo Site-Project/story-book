@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'package:storybook/src/models/story_book.dart';
 
 import '../../models/category_book.dart';
+import '../../models/story_book.dart';
 
 abstract class CategoryService {
   final http.Client httpClient;
