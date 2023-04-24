@@ -21,7 +21,6 @@ class ReadingChaptersScreen extends StatefulWidget {
 }
 
 class _ReadingChaptersScreenState extends State<ReadingChaptersScreen> {
-  final PageController chapterPageController = PageController();
   final List<Chapter> allChapter = [];
 
   @override
@@ -31,13 +30,6 @@ class _ReadingChaptersScreenState extends State<ReadingChaptersScreen> {
       allChapter.addAll(state.chapters.reversed);
     }
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    chapterPageController.dispose();
-
-    super.dispose();
   }
 
   void loadChapter() {}
@@ -56,7 +48,6 @@ class _ReadingChaptersScreenState extends State<ReadingChaptersScreen> {
         ),
       ),
       body: PageView.builder(
-          controller: chapterPageController,
           itemCount: allChapter.length,
           itemBuilder: (context, index) {
             return ChapterItem(chapterId: allChapter[index].id);
@@ -80,7 +71,6 @@ class _ChapterItemState extends State<ChapterItem>
   );
   @override
   Widget build(BuildContext context) {
-    print('aaa');
     super.build(context);
     return BlocBuilder<ChapterDetailByStoryBloc, ChapterDetailByStoryState>(
       bloc: chapterBloc,

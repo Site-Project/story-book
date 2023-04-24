@@ -6,6 +6,17 @@ class NotFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          iconSize: 25,
+          color: Colors.black,
+          splashRadius: 20,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Container(),
     );
   }
