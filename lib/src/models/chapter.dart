@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:storybook/src/shared/helpers/chapter_helper.dart';
+
+import '../shared/helpers/chapter_helper.dart';
 
 class Chapter extends Equatable {
   final int id;

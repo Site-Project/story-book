@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_bloc.dart';
-import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_event.dart';
-import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_state.dart';
 
 import '../blocs/Story_detail_bloc/story_detail_bloc.dart';
 import '../blocs/Story_detail_bloc/story_detail_event.dart';
 import '../blocs/Story_detail_bloc/story_detail_state.dart';
+import '../blocs/chapter_list_bloc/chapter_list_bloc.dart';
+import '../blocs/chapter_list_bloc/chapter_list_event.dart';
+import '../blocs/chapter_list_bloc/chapter_list_state.dart';
 import '../models/story_book.dart';
 import '../shared/constants/app_constants.dart' as constants;
 import '../shared/helpers/iterable_helper.dart';

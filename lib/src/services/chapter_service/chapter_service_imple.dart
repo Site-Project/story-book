@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:storybook/src/services/chapter_service/chapter_service.dart';
 
 import '../../config/app_config.dart';
 import '../../config/app_config_constants.dart';
 import '../../models/chapter.dart';
-import '../../models/story_book.dart';
 import '../../shared/constants/app_constants.dart' as constants;
+import 'chapter_service.dart';
 
 class ChapterServiceImpl implements ChapterService {
   final http.Client client;

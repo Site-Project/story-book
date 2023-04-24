@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
-import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_bloc.dart';
-import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_state.dart';
 
 import '../blocs/chapter_detail_by_story_bloc/chapter_detail_by_story_bloc.dart';
 import '../blocs/chapter_detail_by_story_bloc/chapter_detail_by_story_event.dart';
 import '../blocs/chapter_detail_by_story_bloc/chapter_detail_by_story_state.dart';
+import '../blocs/chapter_list_bloc/chapter_list_bloc.dart';
+import '../blocs/chapter_list_bloc/chapter_list_state.dart';
 import '../models/chapter.dart';
 import '../services/chapter_service/chapter_service_imple.dart';
 import '../widgets/loading_failure_content.dart';

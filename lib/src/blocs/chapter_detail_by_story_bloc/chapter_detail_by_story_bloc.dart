@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 
-import '../../models/chapter.dart';
 import '../../services/chapter_service/chapter_service.dart';
 import 'chapter_detail_by_story_event.dart';
 import 'chapter_detail_by_story_state.dart';

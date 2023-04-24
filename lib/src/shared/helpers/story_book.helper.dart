@@ -1,5 +1,3 @@
-import 'package:storybook/src/models/chapter.dart';
-
 import 'iterable_helper.dart';
 import 'string_helper.dart';
 
