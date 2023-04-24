@@ -10,4 +10,5 @@ class AppConfigConstants {
   static const String NUM_OF_LIMIT_ITEM = 'NUM_OF_LIMIT_ITEM';
   static const String GET_STORY_LIST_BY_CATEGORY_PATH =
       'GET_STORY_LIST_BY_CATEGORY_PATH';
+  static const String GET_STORY_DETAIL_PATH = 'GET_STORY_DETAIL_PATH';
 }

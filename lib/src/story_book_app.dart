@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:storybook/src/blocs/Story_detail_bloc/story_detail_bloc.dart';
 
 import 'blocs/category_bloc/category_book_bloc.dart';
 import 'blocs/cubit/page_number_shower_cubit.dart';
@@ -8,6 +9,8 @@ import 'blocs/story_by_category_list_bloc/story_by_category_list_bloc.dart';
 import 'config/app_router.dart';
 import 'services/category_service/category_service.dart';
 import 'services/category_service/category_service_impl.dart';
+import 'services/story_service/story_service.dart';
+import 'services/story_service/story_service_impl.dart';
 import 'shared/constants/app_constants.dart';
 import 'shared/styles/theme.dart';
 
@@ -17,6 +20,7 @@ class StoryBookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CategoryService categoryService = CategoryServiceImpl(http.Client());
+    final StoryService storyService = StoryServiceImpl(http.Client());
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CategoryBookBloc(categoryService)),
@@ -24,6 +28,7 @@ class StoryBookApp extends StatelessWidget {
           create: (context) => StoryByCategoryListBloc(categoryService),
         ),
         BlocProvider(create: (context) => PageNumberShowerCubit()),
+        BlocProvider(create: (context) => StoryDetailBloc(storyService)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -224,6 +224,12 @@ class _MovePageFormState extends State<MovePageForm> {
   }
 
   @override
+  void dispose() {
+    _pageNumberController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(

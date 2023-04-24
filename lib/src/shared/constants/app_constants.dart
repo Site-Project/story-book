@@ -9,6 +9,7 @@ class StoryDetail {
   static const String status = 'Trạng thái: ';
   static const String rate = 'Đánh giá: ';
   static const String read = 'Đọc truyện';
+  static const String trailingRateText = '(0 lượt)';
 }
 
 class RouteNames {

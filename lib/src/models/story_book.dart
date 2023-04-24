@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:storybook/src/models/category_book.dart';
-import 'package:storybook/src/shared/helpers/story_book.helper.dart';
-import 'package:storybook/src/shared/helpers/string_helper.dart';
+
+import '../shared/helpers/story_book.helper.dart';
 
 class StoryBook extends Equatable {
-  late final int _id;
+  final int id;
   final String? title;
   final String? author;
   final String? poster;
@@ -12,9 +11,7 @@ class StoryBook extends Equatable {
   final String? updatedDate;
   final List<String>? description;
   final List<String>? categories;
-  final double rateCount;
-
-  int get id => _id;
+  final num rateCount;
 
   String get updateDateTime {
     final strReplace = updatedDate?.replaceAll(RegExp(r'T'), ' ');
@@ -23,7 +20,7 @@ class StoryBook extends Equatable {
   }
 
   StoryBook({
-    required int id,
+    required this.id,
     this.title,
     this.author,
     this.poster,
@@ -32,9 +29,7 @@ class StoryBook extends Equatable {
     this.categories,
     this.description,
     this.rateCount = 0.0,
-  }) {
-    _id = id;
-  }
+  });
 
   factory StoryBook.fromJson(Map<String, dynamic> json) {
     assert(json['id'] != null);
@@ -46,14 +41,14 @@ class StoryBook extends Equatable {
       status: json['status'] ?? '',
       updatedDate: json['updatedDate'] ?? '',
       description: StoryBookHelper.buildDescription(json['description']),
-      categories: StoryBookHelper.buildCategories(json['categories'] ?? []),
-      rateCount: json['rateCount'] ?? 0.0,
+      categories: StoryBookHelper.buildCategories(json['categoryList'] ?? []),
+      rateCount: json['rateCount'] ?? 0,
     );
   }
 
   @override
   List<Object?> get props => [
-        _id,
+        id,
         poster,
         title,
         author,

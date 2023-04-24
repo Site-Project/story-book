@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:storybook/src/screens/story_detail.dart';
 
 import '../models/category_book.dart';
 import '../screens/home_screen.dart';
 import '../screens/not_found_screen.dart';
 import '../screens/splash_screen.dart';
+import '../screens/story_detail.dart';
 import '../screens/story_list_screen.dart';
 import '../shared/constants/app_constants.dart';
 
@@ -23,7 +23,11 @@ class AppRouter {
           final data = settings.arguments as CategoryBook;
           return StoryListScreen(data: data);
         case RouteNames.storyDetail:
-          return const StoryDetailScreen();
+          if (settings.arguments is! int) {
+            return const NotFoundScreen();
+          }
+          final id = settings.arguments as int;
+          return StoryDetailScreen(storyId: id);
         default:
           return const NotFoundScreen();
       }

@@ -30,7 +30,11 @@ class _StoryCardState extends State<StoryCard>
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, RouteNames.storyDetail);
+          Navigator.pushNamed(
+            context,
+            RouteNames.storyDetail,
+            arguments: widget.storyBook.id,
+          );
         },
         child: Row(
           children: [
