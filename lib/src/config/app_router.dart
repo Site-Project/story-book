@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:storybook/src/screens/story_detail.dart';
 
 import '../models/category_book.dart';
 import '../screens/home_screen.dart';
@@ -21,6 +22,8 @@ class AppRouter {
           }
           final data = settings.arguments as CategoryBook;
           return StoryListScreen(data: data);
+        case RouteNames.storyDetail:
+          return const StoryDetailScreen();
         default:
           return const NotFoundScreen();
       }

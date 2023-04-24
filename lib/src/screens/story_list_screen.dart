@@ -12,6 +12,7 @@ import '../models/story_book.dart';
 import '../shared/constants/app_constants.dart' as constants;
 import '../shared/helpers/string_helper.dart';
 import '../shared/styles/app_colors.dart';
+import '../widgets/loading_failure_content.dart';
 import '../widgets/story_card.dart';
 
 class StoryListScreen extends StatefulWidget {
@@ -118,6 +119,17 @@ class _StoryListScreenState extends State<StoryListScreen> {
           if (state is StoryByCategoryListSuccess) {
             _currentPage = state.currentPage;
             _stories = state.stories;
+          }
+          if (state is StoryByCategoryListFailure && _stories.isEmpty) {
+            return LoadingFailureContent(
+              onRetry: () {
+                context.read<StoryByCategoryListBloc>().add(
+                      StoryByCategoryListRequested(
+                        id: widget.data.id,
+                      ),
+                    );
+              },
+            );
           }
           return Column(
             children: [
