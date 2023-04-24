@@ -21,11 +21,11 @@ class StoryByCategoryListBloc
           page: event.page ?? _currentPage,
         );
 
-        _stories = List.of(_stories)..addAll(results ?? []);
-
         if (event.page != null) {
+          _stories = results ?? const [];
           _currentPage = event.page!;
         } else {
+          _stories = List.of(_stories)..addAll(results ?? const []);
           _currentPage++;
         }
 

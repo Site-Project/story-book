@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/story_book.dart';
 import '../shared/styles/app_colors.dart';
 
-class StoryCard extends StatelessWidget {
+class StoryCard extends StatefulWidget {
   final StoryBook storyBook;
   const StoryCard({
     super.key,
@@ -11,7 +11,14 @@ class StoryCard extends StatelessWidget {
   });
 
   @override
+  State<StoryCard> createState() => _StoryCardState();
+}
+
+class _StoryCardState extends State<StoryCard>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       padding: const EdgeInsets.all(10),
@@ -27,7 +34,7 @@ class StoryCard extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundImage: NetworkImage(
-                storyBook.poster ?? '',
+                widget.storyBook.poster ?? '',
               ),
               backgroundColor: AppColors.onPrimary,
               radius: 40,
@@ -38,25 +45,25 @@ class StoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    storyBook.title ?? '...',
+                    widget.storyBook.title ?? '...',
                     style: Theme.of(context).textTheme.titleLarge,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    storyBook.author ?? '...',
+                    widget.storyBook.author ?? '...',
                     style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    storyBook.status ?? '...',
+                    widget.storyBook.status ?? '...',
                     style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    storyBook.updatedDate ?? '...',
+                    widget.storyBook.updatedDate ?? '...',
                     style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -69,4 +76,7 @@ class StoryCard extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -18,4 +18,8 @@ class ErrorMessage {
 
 class Global {
   static const String retry = "Thử lại";
+  static const String movePageTitle = "Chuyển trang nhanh";
+  static const String cancel = "HỦY";
+  static const String movePage = " CHUYỂN TRANG";
+  static const String inputPage = "Nhập trang";
 }
