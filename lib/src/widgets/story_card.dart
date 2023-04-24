@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/story_book.dart';
+import '../shared/constants/app_constants.dart';
 import '../shared/styles/app_colors.dart';
 
 class StoryCard extends StatefulWidget {
@@ -19,6 +20,7 @@ class _StoryCardState extends State<StoryCard>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       padding: const EdgeInsets.all(10),
@@ -28,7 +30,7 @@ class _StoryCardState extends State<StoryCard>
       ),
       child: InkWell(
         onTap: () {
-          ///
+          Navigator.pushNamed(context, RouteNames.storyDetail);
         },
         child: Row(
           children: [
@@ -63,7 +65,7 @@ class _StoryCardState extends State<StoryCard>
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    widget.storyBook.updatedDate ?? '...',
+                    widget.storyBook.updateDateTime,
                     style: Theme.of(context).textTheme.titleSmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

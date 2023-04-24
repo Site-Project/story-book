@@ -10,6 +10,12 @@ class StoryBook extends Equatable {
 
   int get id => _id;
 
+  String get updateDateTime {
+    final strReplace = updatedDate?.replaceAll(RegExp(r'T'), ' ');
+    final result = strReplace?.split('.').first;
+    return result ?? '';
+  }
+
   StoryBook({
     required int id,
     this.title,
