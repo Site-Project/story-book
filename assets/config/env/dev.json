@@ -2,5 +2,6 @@
     "ENV" : "dev",
     "HOST_NAME": "truyen-clone.getdata.one",
     "GET_CATEGORY_LIST_PATH": "/category",
-    "NUM_OF_LIMIT_ITEM": 30
+    "GET_STORY_LIST_BY_CATEGORY_PATH": "id/#ID#/story",
+    "NUM_OF_LIMIT_ITEM": 20
 }
