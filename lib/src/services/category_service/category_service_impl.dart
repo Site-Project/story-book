@@ -24,7 +24,8 @@ class CategoryServiceImpl implements CategoryService {
         path: AppConfig.instance
             .getValue(AppConfigConstants.GET_CATEGORY_LIST_PATH),
       );
-      final response = await httpClient.get(uri);
+      final response =
+          await httpClient.get(uri).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final List<CategoryBook> results = [];
@@ -64,7 +65,8 @@ class CategoryServiceImpl implements CategoryService {
         path: path,
         query: query,
       );
-      final response = await httpClient.get(uri);
+      final response =
+          await httpClient.get(uri).timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final List<StoryBook> results = [];

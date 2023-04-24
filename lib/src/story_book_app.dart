@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:storybook/src/blocs/Story_detail_bloc/story_detail_bloc.dart';
+import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_bloc.dart';
 
 import 'blocs/category_bloc/category_book_bloc.dart';
 import 'blocs/cubit/page_number_shower_cubit.dart';
@@ -29,6 +30,7 @@ class StoryBookApp extends StatelessWidget {
         ),
         BlocProvider(create: (context) => PageNumberShowerCubit()),
         BlocProvider(create: (context) => StoryDetailBloc(storyService)),
+        BlocProvider(create: (context) => ChapterListBloc(storyService)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

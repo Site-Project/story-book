@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_bloc.dart';
+import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_event.dart';
+import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_state.dart';
 
 import '../blocs/Story_detail_bloc/story_detail_bloc.dart';
 import '../blocs/Story_detail_bloc/story_detail_event.dart';
@@ -23,10 +28,25 @@ class StoryDetailScreen extends StatefulWidget {
 }
 
 class _StoryDetailScreenState extends State<StoryDetailScreen> {
+  late final StreamSubscription _chappterListener;
   @override
   void initState() {
     context.read<StoryDetailBloc>().add(StoryDetailRequested(widget.storyId));
+    _chappterListener = context.read<StoryDetailBloc>().stream.listen((state) {
+      if (state is StoryDetailLoadInSuccess) {
+        context.read<ChapterListBloc>().add(
+              ChapterListRequested(state.storyBook.slug),
+            );
+      }
+    });
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _chappterListener.cancel();
+    super.dispose();
   }
 
   @override
@@ -45,10 +65,10 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
         ),
       ),
       body: BlocBuilder<StoryDetailBloc, StoryDetailState>(
-        builder: (context, state) {
+        builder: (context, storyDetailState) {
           return Stack(
             children: [
-              state is StoryDetailLoadInSuccess
+              storyDetailState is StoryDetailLoadInSuccess
                   ? RefreshIndicator(
                       onRefresh: () async {
                         context
@@ -75,14 +95,14 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
                               children: [
                                 CircleAvatar(
                                   backgroundImage: NetworkImage(
-                                    state.storyBook.poster ?? '',
+                                    storyDetailState.storyBook.poster ?? '',
                                   ),
                                   backgroundColor: AppColors.onPrimary,
                                   radius: 60,
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  state.storyBook.title ?? '...',
+                                  storyDetailState.storyBook.title ?? '...',
                                   style:
                                       Theme.of(context).textTheme.displayMedium,
                                   textAlign: TextAlign.center,
@@ -91,7 +111,8 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          StoryInfomationCard(storyBook: state.storyBook),
+                          StoryInfomationCard(
+                              storyBook: storyDetailState.storyBook),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 10),
@@ -126,26 +147,95 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: (state.storyBook.description ?? [])
-                                  .map(
-                                    (e) => Text(
-                                      e,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                    ),
-                                  )
-                                  .toList(),
+                              children:
+                                  (storyDetailState.storyBook.description ?? [])
+                                      .map(
+                                        (e) => Text(
+                                          e,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                        ),
+                                      )
+                                      .toList(),
                             ),
                           ),
+                          const SizedBox(height: 10),
+                          BlocBuilder<ChapterListBloc, ChapterListState>(
+                            builder: (context, chapterListState) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.onPrimary.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      constants.StoryDetail.newChapters,
+                                      style:
+                                          theme.textTheme.titleMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    chapterListState
+                                            is ChapterListLoadInProgress
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(30),
+                                            child: LoadingIndicator(),
+                                          )
+                                        : const SizedBox.shrink(),
+                                    chapterListState is ChapterListLoadFailure
+                                        ? LoadingFailureContent(onRetry: () {
+                                            context.read<ChapterListBloc>().add(
+                                                  ChapterListRequested(
+                                                    storyDetailState
+                                                        .storyBook.slug,
+                                                  ),
+                                                );
+                                          })
+                                        : const SizedBox.shrink(),
+                                    chapterListState is ChapterListLoadSuccess
+                                        ? Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: List.generate(
+                                              5,
+                                              (index) {
+                                                final chapter = chapterListState
+                                                    .chapters[index];
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  child: Text(
+                                                    chapter.header ?? '...',
+                                                    style: theme
+                                                        .textTheme.titleMedium,
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 40),
                         ],
                       ),
                     )
                   : const SizedBox.shrink(),
-              state is StoryDetailLoadInProgress
+              storyDetailState is StoryDetailLoadInProgress
                   ? const LoadingIndicator()
                   : const SizedBox.shrink(),
-              state is StoryDetailLoadFailure
+              storyDetailState is StoryDetailLoadFailure
                   ? LoadingFailureContent(onRetry: () {
                       context
                           .read<StoryDetailBloc>()

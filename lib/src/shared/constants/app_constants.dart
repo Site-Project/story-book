@@ -10,6 +10,7 @@ class StoryDetail {
   static const String rate = 'Đánh giá: ';
   static const String read = 'Đọc truyện';
   static const String trailingRateText = '(0 lượt)';
+  static const String newChapters = 'Các chương mới nhất';
 }
 
 class RouteNames {

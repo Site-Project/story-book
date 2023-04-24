@@ -1,3 +1,5 @@
+import 'package:storybook/src/models/chapter.dart';
+
 import 'iterable_helper.dart';
 import 'string_helper.dart';
 
@@ -14,10 +16,10 @@ class StoryBookHelper {
     return result;
   }
 
-  static List<String> buildCategories(List<dynamic> listDesc) {
+  static List<String> buildCategories(List<dynamic> listCategories) {
     final List<String> result = [];
-    if (IterableHelper.isNotNullOrEmpty(listDesc)) {
-      for (var element in listDesc) {
+    if (IterableHelper.isNotNullOrEmpty(listCategories)) {
+      for (var element in listCategories) {
         result.add(element.toString());
       }
     }

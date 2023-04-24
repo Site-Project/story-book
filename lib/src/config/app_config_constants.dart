@@ -11,4 +11,6 @@ class AppConfigConstants {
   static const String GET_STORY_LIST_BY_CATEGORY_PATH =
       'GET_STORY_LIST_BY_CATEGORY_PATH';
   static const String GET_STORY_DETAIL_PATH = 'GET_STORY_DETAIL_PATH';
+  static const String GET_CHAPTER_LIST_BY_STORY_PATH =
+      'GET_CHAPTER_LIST_BY_STORY_PATH';
 }

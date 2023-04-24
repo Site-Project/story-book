@@ -4,5 +4,6 @@
     "GET_CATEGORY_LIST_PATH": "/category",
     "GET_STORY_LIST_BY_CATEGORY_PATH": "id/#ID#/story",
     "GET_STORY_DETAIL_PATH": "story/id/",
+    "GET_CHAPTER_LIST_BY_STORY_PATH": "story/#SLUG#/chapters",
     "NUM_OF_LIMIT_ITEM": 20
 }

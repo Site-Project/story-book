@@ -4,6 +4,7 @@ import '../shared/helpers/story_book.helper.dart';
 
 class StoryBook extends Equatable {
   final int id;
+  final String slug;
   final String? title;
   final String? author;
   final String? poster;
@@ -19,8 +20,9 @@ class StoryBook extends Equatable {
     return result ?? '';
   }
 
-  StoryBook({
+  const StoryBook({
     required this.id,
+    required this.slug,
     this.title,
     this.author,
     this.poster,
@@ -32,9 +34,10 @@ class StoryBook extends Equatable {
   });
 
   factory StoryBook.fromJson(Map<String, dynamic> json) {
-    assert(json['id'] != null);
+    assert(json['id'] != null && json['slug'] != null);
     return StoryBook(
       id: json['id'],
+      slug: json['slug'],
       title: json['title'] ?? '',
       author: json['author'] ?? '',
       poster: json['poster'] ?? '',
@@ -49,6 +52,7 @@ class StoryBook extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        slug,
         poster,
         title,
         author,
