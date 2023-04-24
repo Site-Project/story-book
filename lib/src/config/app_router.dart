@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../models/category_book.dart';
 import '../screens/home_screen.dart';
 import '../screens/not_found_screen.dart';
+import '../screens/reading_chapters_screen.dart';
 import '../screens/splash_screen.dart';
 import '../screens/story_detail.dart';
 import '../screens/story_list_screen.dart';
@@ -28,6 +29,8 @@ class AppRouter {
           }
           final id = settings.arguments as int;
           return StoryDetailScreen(storyId: id);
+        case RouteNames.readingChapter:
+          return const ReadingChaptersScreen();
         default:
           return const NotFoundScreen();
       }

@@ -118,7 +118,10 @@ class _StoryDetailScreenState extends State<StoryDetailScreen> {
                                 horizontal: 30, vertical: 10),
                             child: ElevatedButton(
                               onPressed: () {
-                                ///
+                                Navigator.pushNamed(
+                                  context,
+                                  constants.RouteNames.readingChapter,
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0.0,

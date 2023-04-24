@@ -5,7 +5,7 @@ import 'package:storybook/src/blocs/Story_detail_bloc/story_detail_bloc.dart';
 import 'package:storybook/src/blocs/chapter_list_bloc/chapter_list_bloc.dart';
 
 import 'blocs/category_bloc/category_book_bloc.dart';
-import 'blocs/cubit/page_number_shower_cubit.dart';
+import 'blocs/page_number_shower_cubit/page_number_shower_cubit.dart';
 import 'blocs/story_by_category_list_bloc/story_by_category_list_bloc.dart';
 import 'config/app_router.dart';
 import 'services/category_service/category_service.dart';

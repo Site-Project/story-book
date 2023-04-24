@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:storybook/src/shared/helpers/chapter_helper.dart';
 
 class Chapter extends Equatable {
   final int id;
   final String slug;
   final String? header;
-  final String? body;
+  final List<String>? body;
 
   const Chapter({
     required this.id,
@@ -19,7 +20,7 @@ class Chapter extends Equatable {
       id: json['id'],
       slug: json['slug'],
       header: json['header'] ?? '',
-      body: json['body'] ?? '...',
+      body: ChapterHelper.buildBody(json['body']),
     );
   }
 

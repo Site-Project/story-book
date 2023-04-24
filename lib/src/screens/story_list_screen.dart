@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/cubit/page_number_shower_cubit.dart';
+import '../blocs/page_number_shower_cubit/page_number_shower_cubit.dart';
 import '../blocs/story_by_category_list_bloc/story_by_category_list_bloc.dart';
 import '../blocs/story_by_category_list_bloc/story_by_category_list_event.dart';
 import '../blocs/story_by_category_list_bloc/story_by_category_list_state.dart';

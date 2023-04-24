@@ -18,6 +18,7 @@ class RouteNames {
   static const String home = '/home';
   static const String storyList = '/storyList';
   static const String storyDetail = '/storyDetail';
+  static const String readingChapter = '/readingChapter';
 }
 
 class ErrorMessage {
