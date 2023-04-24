@@ -16,6 +16,9 @@ class AppRouter {
         case RouteNames.home:
           return const HomeScreen();
         case RouteNames.storyList:
+          if (settings.arguments is! CategoryBook) {
+            return const NotFoundScreen();
+          }
           final data = settings.arguments as CategoryBook;
           return StoryListScreen(data: data);
         default:

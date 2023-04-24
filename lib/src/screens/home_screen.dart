@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/bloc/category_book_bloc.dart';
-import '../blocs/bloc/category_book_event.dart';
-import '../blocs/bloc/category_book_state.dart';
+import '../blocs/category_bloc/category_book_bloc.dart';
+import '../blocs/category_bloc/category_book_event.dart';
+import '../blocs/category_bloc/category_book_state.dart';
 import '../models/category_book.dart';
 import '../shared/constants/app_constants.dart' as constants;
 import '../shared/helpers/iterable_helper.dart';
 import '../shared/styles/app_colors.dart';
-import '../widgets/retry_button.dart';
+import '../widgets/loading_failure_content.dart';
+import '../widgets/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -112,49 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       state is CategoryBookLoadFailure &&
                               IterableHelper.isNullOrEmpty(categories)
-                          ? Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(30.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      constants.ErrorMessage.getListFailure,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            color: Colors.grey,
-                                          ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    ReTryButtom(
-                                      title: constants.Global.retry,
-                                      onRetry: () {
-                                        context
-                                            .read<CategoryBookBloc>()
-                                            .add(CategoryBookRequested());
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
+                          ? LoadingFailureContent(
+                              onRetry: () {
+                                context
+                                    .read<CategoryBookBloc>()
+                                    .add(CategoryBookRequested());
+                              },
                             )
                           : const SizedBox.shrink(),
                       state is CategoryBookLoadInProgress
-                          ? Center(
-                              child: Container(
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const CircularProgressIndicator(
-                                  backgroundColor: Colors.transparent,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                            )
+                          ? const LoadingIndicator()
                           : const SizedBox.shrink(),
                     ],
                   );

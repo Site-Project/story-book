@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:storybook/src/models/story_book.dart';
+
+import '../../models/story_book.dart';
 
 abstract class StoryByCategoryListState extends Equatable {
   const StoryByCategoryListState();
