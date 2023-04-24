@@ -11,7 +11,7 @@ class RouteNames {
 
 class ErrorMessage {
   static const String getListFailure =
-      "Đã xảy ra lỗi khi cập nhật danh sách. Xin hãy thử lại.";
+      "'Tải danh sách thất bại. Xin hãy thử lại'";
   static const String requestError =
       "Has an error with static code #StaticCode#";
 }

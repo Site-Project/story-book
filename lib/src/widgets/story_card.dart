@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../models/story_book.dart';
 import '../shared/styles/app_colors.dart';
 
 class StoryCard extends StatelessWidget {
-  const StoryCard({super.key});
+  final StoryBook storyBook;
+  const StoryCard({
+    super.key,
+    required this.storyBook,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,39 +19,54 @@ class StoryCard extends StatelessWidget {
         color: AppColors.onPrimary.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(
-              "assets/images/avatar_1.png",
+      child: InkWell(
+        onTap: () {
+          ///
+        },
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(
+                storyBook.poster ?? '',
+              ),
+              backgroundColor: AppColors.onPrimary,
+              radius: 40,
             ),
-            radius: 40,
-          ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Vạn Cổ Ma Tôn',
-                style: Theme.of(context).textTheme.displaySmall,
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    storyBook.title ?? '...',
+                    style: Theme.of(context).textTheme.titleLarge,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    storyBook.author ?? '...',
+                    style: Theme.of(context).textTheme.titleSmall,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    storyBook.status ?? '...',
+                    style: Theme.of(context).textTheme.titleSmall,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    storyBook.updatedDate ?? '...',
+                    style: Theme.of(context).textTheme.titleSmall,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
               ),
-              Text(
-                'Lâm Nhất',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              Text(
-                '510 chương - Đang ra',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              Text(
-                '17:20:33 (1 Tuần trước)',
-                style: Theme.of(context).textTheme.titleSmall,
-              )
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
-    ;
   }
 }
